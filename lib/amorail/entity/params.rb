@@ -26,8 +26,10 @@ module Amorail # :nodoc: all
         prop_values = send(v.fetch(:method_name, k))
 
         if prop_values.is_a?(Array)
+          enums = (props.send(k).enums || {}).invert
+
           prop_val = prop_values.map do |value|
-            { value: value }.merge(v)
+            { value: value, enum: enums[value] }.compact.merge(v)
           end
         else
           prop_val = [{ value: prop_values }.merge(v)]
