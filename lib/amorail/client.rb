@@ -35,7 +35,7 @@ module Amorail
       @access_token = @access.token
       @refresh_token = @access.refresh_token
 
-      @connect = Faraday.new(url: api_endpoint) do |faraday|
+      @connect = Faraday.new(url: api_endpoint, proxy: proxy) do |faraday|
         faraday.response :json, content_type: /\bjson$/
         faraday.use :instrumentation
         faraday.adapter Faraday.default_adapter
@@ -129,6 +129,10 @@ module Amorail
       else
         fail ::Amorail::AmoUnknownError, response.body
       end
+    end
+
+    def proxy
+      (Amorail.config.proxies || []).sample
     end
 
     def create_access_token(response)

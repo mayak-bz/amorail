@@ -14,6 +14,7 @@ module Amorail
                 :code,
                 :redirect_uri,
                 :redis_url,
+                :proxies,
                 api_path: '/private/api/v2/json/',
                 auth_url: '/oauth2/access_token',
                 redis_host: '127.0.0.1',
